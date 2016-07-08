@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+
+}
+canvas {
+    background: #CCC;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+}
+    </style>
+    </style>
+        <!-- Load the Paper.js library -->
+        <script type="text/javascript" src="js/paper-full.js"></script>
+        <!-- Load external PaperScript and associate it with myCanvas -->
+        <script type="text/paperscript" canvas="myCanvas">
+
+var canvas = document.getElementById('myCanvas');
+canvas.style.background = 'black';
+
+var width = canvas.width;
+var height = canvas.height;
+
+var pixw = width/640;
+var pixh = height/480;
+
+var xCentre = -0.75;
+var yCentre = +0.0;
+var nx      = 400;
+var ny      = 400;
+
+var dxy     = 0.005;
+var cx; 
+var cy;
+var zx;
+var zy;
+var new_zx;
+var n;
+var i; 
+var j;
+
+    // The Mandelbrot calculation is to iterate the equation
+    // z = z*z + c, where z and c are complex numbers, z is initially
+    // zero, and c is the coordinate of the point being tested. If
+    // the magnitude of z remains less than 2 for ever, then the point
+    // c is in the Mandelbrot set. We write out the number of iterations
+    // before the magnitude of z exceeds 2, or UCHAR_MAX, whichever is
+    // smaller.
+
+var path = new Path();
+// Give the stroke a color
+path.strokeColor = 'red';
+for (j = 0; j < ny; j++) {
+    cy = yCentre + (j - ny/2)*dxy;
+    for (i = 0; i < nx; i++) {
+        cx = xCentre + (i - nx/2)*dxy;
+        zx = 0.0; 
+        zy = 0.0; 
+        n = 0;
+        while ((zx*zx + zy*zy < 4.0) && (n != 255)) {
+            new_zx = zx*zx - zy*zy + cx;
+            zy = 2.0*zx*zy + cy;
+            zx = new_zx;
+            n++;
+        }
+        var p = new Path.Rectangle(j*2,i*2,2,2);
+        p.fillColor =  'red'
+        p.fillColor.hue += n;
+    }
+}
+function onFrame(event) {
+}
+function onKeyUp(event) {
+if (event.key == 'space') {
+}
+if (event.key == 'z') {
+rotationRate = rotationRate+1;
+}
+// Show stats:
+if (event.key == 'x') {
+rotationRate = rotationRate-1;
+}
+}
+
+        </script>
+    </head>
+    <body>
+        <canvas id="myCanvas" resize></canvas> </canvas>
+    </body>
+</html>
+
