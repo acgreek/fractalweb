@@ -39,7 +39,7 @@ var pixh = height/480;
 
 var xCentre = -0.75;
 var yCentre = +0.0;
-var nx      = 400;
+var nx      = 800;
 var ny      = 400;
 
 var dxy     = 0.005;
@@ -76,9 +76,11 @@ for (j = 0; j < ny; j++) {
             zx = new_zx;
             n++;
         }
-        var p = new Path.Rectangle(j*2,i*2,2,2);
-        p.fillColor =  'red'
-        p.fillColor.hue += n;
+        if (n> 0 ) {
+            var p = new Path.Rectangle(j*1,i*1,1,1);
+            p.fillColor =  'red'
+            p.fillColor.hue += n;
+        }
     }
 }
 function onFrame(event) {
